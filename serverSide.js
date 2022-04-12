@@ -31,4 +31,14 @@ app.get('/:shortUrl', async (req, res) => {
   res.redirect(shortUrl.full)
 })
 
+app.get('/delete/shortUrl/:_id', async (req, res) => {
+    const { _id } = req.params;
+    ShortUrl.deleteOne({ _id })
+    .then(() => {
+        console.log("Deleted successfully");
+        res.redirect('/');
+    })
+    .catch((err) => console.log(err)); 
+})
+
 app.listen(process.env.PORT || 5000);
