@@ -42,45 +42,52 @@
         />
         <button class="btn btn-success" type="submit">Shorten</button>
       </form>
-      <h3>User History</h3>
-      <table class="table table-striped table-responsive">
-        <thead>
-          <tr>
-            <th>Full URL</th>
-            <th>Short URL</th>
-            <th>Clicks</th>
-            <th>Delete Record</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% shortUrls.forEach(shortUrl=> { %>
-          <tr>
-            <td>
-              <a href="<%= shortUrl.full %>" target="_blank">
-                <%= shortUrl.full %>
-              </a>
-            </td>
-            <td>
-              <a href="<%= shortUrl.short %>" target="_blank"
-                >http://localhost:5000/<%= shortUrl.short %></a
-              >
-            </td>
-            <td><%= shortUrl.clicks %></td>
-            <td>
-              <a
-                href="/delete/shortUrl/<%= shortUrl._id %>"
-                class="btn btn-danger"
-                role="button"
-                >Delete</a
-              >
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <button class="btn btn-danger" onclick="deleteAllHistory()">
-        Delete All History
-      </button>
+      <% if(shortUrls.length <= 0){ %>
+      <p>The history of long URLs and shortened URLs will be shown below once a URL is shortened!</p>
+      <div id="history" style="display: none">
+      <% } else{ %>  
+      <div id="history" style="display: block">
+      <% } %>
+        <h3>User History</h3>
+        <table class="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>Full URL</th>
+              <th>Short URL</th>
+              <th>Clicks</th>
+              <th>Delete Record</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% shortUrls.forEach(shortUrl=> { %>
+            <tr>
+              <td>
+                <a href="<%= shortUrl.full %>" target="_blank">
+                  <%= shortUrl.full %>
+                </a>
+              </td>
+              <td>
+                <a href="<%= shortUrl.short %>" target="_blank"
+                  >http://localhost:5000/<%= shortUrl.short %></a
+                >
+              </td>
+              <td><%= shortUrl.clicks %></td>
+              <td>
+                <a
+                  href="/delete/shortUrl/<%= shortUrl._id %>"
+                  class="btn btn-danger"
+                  role="button"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <button class="btn btn-danger" onclick="deleteAllHistory()">
+          Delete All History
+        </button>
+      </div>
     </div>
   </body>
 </html>
