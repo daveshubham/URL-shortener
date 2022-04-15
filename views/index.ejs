@@ -21,8 +21,10 @@
       }
 
       async function deleteAllHistory() {
-        await deleteOperationRequest();
-        window.location.reload();
+        if(confirm("Are you sure? All the data will be deleted!") == true) {
+          await deleteOperationRequest();
+          window.location.reload();
+        }
       }
     </script>
   </head>
