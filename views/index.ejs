@@ -44,6 +44,13 @@
         />
         <button class="btn btn-success" type="submit">Shorten</button>
       </form>
+      <% if (duplicateError != "") { %>
+        <script>
+          var duplicateError = "<%= duplicateError %>";
+          alert(duplicateError);
+          
+        </script>
+      <% } %>
       <% if(shortUrls.length <= 0){ %>
       <p>The history of long URLs and shortened URLs will be shown below once a URL is shortened!</p>
       <div id="history" style="display: none">

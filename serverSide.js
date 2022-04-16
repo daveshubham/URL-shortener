@@ -16,13 +16,20 @@ app.get("/", async (req, res) => {
   res.render("index", { shortUrls: shortUrls });
 });
 
+app.locals.duplicateError = "";
 app.post("/shortUrls", async (req, res) => {
-  await ShortUrl.create({ full: req.body.fullUrl });
-
+  if (await ShortUrl.findOne({ full: req.body.fullUrl })) {
+    console.log("Already exists!");
+    app.locals.duplicateError = "This record already exists!";
+  } else {
+    app.locals.duplicateError = "";
+    await ShortUrl.create({ full: req.body.fullUrl });
+  }
   res.redirect("/");
 });
 
 app.get("/:shortUrl", async (req, res) => {
+  app.locals.duplicateError = "";
   const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
   if (shortUrl == null) return res.sendStatus(404);
 
@@ -33,6 +40,7 @@ app.get("/:shortUrl", async (req, res) => {
 });
 
 app.get("/delete/shortUrl/:_id", async (req, res) => {
+  app.locals.duplicateError = "";
   const { _id } = req.params;
   ShortUrl.deleteOne({ _id })
     .then(() => {
